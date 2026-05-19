@@ -26,6 +26,7 @@ AMAZON_TAG = "123450005-21"
 TWITTER_CREDENTIALS = os.path.expanduser("~/.codex/twitter_dealwala.json")
 POOL_FILE = "deals_pool.json"
 CLOUD_MODE = os.environ.get("CLOUD_MODE", "").lower() == "true"
+REFILL_MODE = "--refill" in sys.argv
 
 REACTION_SETS = [
     [{"type": "emoji", "emoji": "🔥"}],
@@ -604,6 +605,9 @@ def main():
     top_deals = get_deals(history)
     if not top_deals:
         print("No deals to post. Waiting for better deals..." if not CLOUD_MODE else "Pool empty. Run scraper on device to refill.")
+        return
+    if REFILL_MODE:
+        print("Refill mode: pool saved, exiting without posting")
         return
 
     now = datetime.now().strftime("%b %d, %I:%M %p")

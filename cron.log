@@ -1,0 +1,325 @@
+[2026-05-19 09:00:01.787946] Fetching deals...
+Found 0 new deals
+No new deals
+Failed: {'ok': False, 'error_code': 400, 'description': "Bad Request: can't parse entities: Can't find end of the entity starting at byte offset 741"}
+[2026-05-19 09:20:01.613337] Fetching deals...
+Error parsing mobiles: Expecting value: line 1 column 1 (char 0)
+Error parsing televisions: Expecting value: line 1 column 1 (char 0)
+Error parsing laptop_accessories: Expecting value: line 1 column 1 (char 0)
+Error parsing watches: Expecting value: line 1 column 1 (char 0)
+Error parsing mens_clothing: Expecting value: line 1 column 1 (char 0)
+Error parsing womens_clothing: Expecting value: line 1 column 1 (char 0)
+Error parsing mens_footwear: Expecting value: line 1 column 1 (char 0)
+Flipkart API: 0 products fetched
+Total unique new deals: 5
+[2026-05-19 09:40:01.620502] Fetching deals...
+Found 2 unique new deals
+Posted! MsgID: 2472
+Posted 2 deals
+[2026-05-19 09:50:01.826941] Fetching commission-eligible deals...
+Fetching Flipkart deals...
+Fetching Amazon deals...
+Found 36 deals total
+Unique new deals: 9
+Posted! MsgID: 2479
+Posted! MsgID: 2480
+Posted 9 deals with affiliate tracking
+[2026-05-19 10:00:01.333029] Fetching deals...
+Fetching Flipkart deals...
+Fetching Amazon deals...
+Found 36 deals total
+Unique new deals: 7
+Posted! MsgID: 2484
+Posted! MsgID: 2485
+Posted 7 deals with hidden affiliate links
+Failed: {'ok': False, 'error_code': 400, 'description': 'Bad Request: reply markup is too long'}
+Failed: {'ok': False, 'error_code': 400, 'description': 'Bad Request: reply markup is too long'}
+
+============================================================
+[2026-05-19 10:10:02.000238] 🔥 SCRAPING ALL SOURCES FOR DEALS 🔥
+============================================================
+  [Flipkart] Searching high-commission products...
+  [Flipkart] Found 20 products
+  [Amazon] Searching high-commission products...
+  [Amazon] Found 16 products
+  [DuckDuckGo] Searching deal aggregator sites...
+  [DuckDuckGo] Found 0 product links
+  [Deal Sites] Scraping deal aggregators...
+  [Deal Sites] Found 3 products
+  [News Sites] Scraping tech news for deals...
+  [News Sites] Found 0 products
+  [Google] Searching for best deal products...
+  [Google] Found 0 products
+
+📊 TOTAL FOUND: 39 deals from all sources
+✅ UNIQUE NEW DEALS: 31
+Posted! MsgID: 2486
+Posted! MsgID: 2487
+Posted! MsgID: 2488
+Posted! MsgID: 2489
+
+💰 POSTED 19 deals with hidden affiliate links
+   All clicks → tracked → you earn commission!
+[10:20:01] 🔥 SCANNING FOR DEALS (STRICT AFFILIATE ONLY)
+  [Flipkart] Found 3 (all with affiliate)
+  [Amazon] Found 0 (all with affiliate)
+  [DDG→Products] Found 0 (all with affiliate)
+  [Aggregators] Found 0 (all with affiliate)
+
+🔍 VERIFIED: 3 deals with affiliate IDs | 🗑️ Dropped: 0
+Posted! MsgID: 2490
+
+💰 Posted 3 deals — ALL with affiliate tracking!
+[10:30:02] 🔥 STRICT AFFILIATE SCANNER
+  [Flipkart] 9 deals
+  [DDG] 0 deals
+
+✅ 9 verified | 🗑️ 0 dropped
+   All links contain affiliate ID: lalitkcho
+  Posted! MsgID: 2493
+  Posted! MsgID: 2494
+
+💰 Posted 9 deals — ALL with affiliate tracking!
+[10:45:02] 🔥 STRICT AFFILIATE + PREMIUM REACTIONS
+  [Flipkart] 9 deals
+  [DDG] 0 deals
+
+✅ 6 verified | 🗑️ 3 dropped
+  Posted! MsgID: 2499
+  ✨ Reactions added: 🔥
+  Posted! MsgID: 2500
+
+💰 Posted 6 deals — ALL with affiliate tracking!
+[11:00:01] 🔥 EXPERT AFFILIATE v3
+  [Flipkart] found 8, enriching prices... done
+
+📊 8 total | 🏆 8 top scored
+Traceback (most recent call last):
+  File "/root/dealwalaindia/post_deals.py", line 338, in <module>
+    main()
+  File "/root/dealwalaindia/post_deals.py", line 326, in main
+    if post_with_buttons(token, text, buttons):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/dealwalaindia/post_deals.py", line 83, in post_with_buttons
+    r = subprocess.run(["curl", "-s", "-X", "POST", url,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 550, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 1209, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 2116, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+  File "/usr/lib/python3.12/subprocess.py", line 1253, in _check_timeout
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['curl', '-s', '-X', 'POST', 'https://api.telegram.org/bot8858349292:AAGfTyf0LUCAsGZv_HcpRB73F2oxlJMow4Y/sendMessage', '-H', 'Content-Type: application/json', '-d', '{"chat_id": -1003622769806, "text": "\\ud83d\\udd25 <b>TOP DEALS - May 19, 11:01 AM</b>\\n\\n\\ud83d\\udd35 realme Narzo 100 Lite 5G (Thunder Black, 64 GB)\\n\\ud83d\\udcb0 <b>\\u20b914,468</b> <s>\\u20b924,999</s> <b>-42% OFF</b>\\n\\ud83d\\udd35 OPPO K14x 5G (Prism Violet, 64 GB)\\n\\ud83d\\udcb0 <b>\\u20b914,999</b> <s>\\u20b919,999</s> <b>-25% OFF</b>\\n\\ud83d\\udd35 REDMI A7 Pro 5G (Black, 64 GB)\\n\\ud83d\\udcb0 <b>\\u20b912,804</b> <s>\\u20b915,999</s> <b>-19% OFF</b>\\n\\ud83d\\udd35 Samsung Galaxy F70e 5G (Limelight Green, 128 GB)\\n\\ud83d\\udcb0 <b>\\u20b914,499</b> <s>\\u20b916,999</s> <b>-14% OFF</b>\\n\\n\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\n\\u23f0 <b>Hurry! Limited stock</b>\\n", "parse_mode": "HTML", "disable_web_page_preview": true, "reply_markup": {"inline_keyboard": [[{"text": "\\ud83d\\udecd \\u20b914,468 realme Narzo 100 L...", "url": "https://www.flipkart.com/realme-narzo-100-lite-5g-thunder-black-64-gb/p/itm659398bfe469c?pid=MOBHMZ3QKKTHQW7M&affid=lalitkcho"}, {"text": "\\ud83d\\udecd \\u20b914,999 OPPO K14x 5G (Pris...", "url": "https://www.flipkart.com/oppo-k14x-5g-prism-violet-64-gb/p/itm188c7a4b69292?pid=MOBHKZF3DGME8JHG&affid=lalitkcho"}], [{"text": "\\ud83d\\udecd \\u20b912,804 REDMI A7 Pro 5G (B...", "url": "https://www.flipkart.com/redmi-a7-pro-5g-black-64-gb/p/itm88c66032a6b5e?pid=MOBHMJQCVDFJWJCY&affid=lalitkcho"}, {"text": "\\ud83d\\udecd \\u20b914,499 Samsung Galaxy F70...", "url": "https://www.flipkart.com/samsung-galaxy-f70e-5g-limelight-green-128-gb/p/itm9b75b980e9dae?pid=MOBHK55AS9FDDYFE&affid=lalitkcho"}]]}}']' timed out after 15 seconds
+[11:15:02] 🔥 EXPERT AFFILIATE v3
+  [Flipkart] found 12, enriching prices... done
+
+📊 12 total | 🏆 8 top scored
+  Posted! MsgID: 2503
+  ✨ Reaction: 🤩
+  Posted! MsgID: 2504
+  ✨ Reaction: ❤️
+
+💰 Posted 8 deals with affiliate tracking!
+[11:30:02] 🔥 EXPERT AFFILIATE v3
+  [Flipkart] found 12, enriching prices... done
+
+📊 12 total | 🏆 5 high-value (score≥45)
+  #1 Score:145 | ₹2,998 | -66% | Monkeyman ApeWatch Rampage Smartwatch
+  #2 Score:115 | ₹849 | -71% | PunnkFunnk Edge-Lite | 1.99 \
+  #3 Score: 80 | ₹24,586 | -23% | OnePlus Nord CE6 Lite (Vivid Mint, 128 G
+  #4 Score: 65 | ₹29,999 | -14% | vivo T4 Pro 5G (Nitro Blue, 256 GB)
+  #5 Score: 55 | ₹29,999 | -18% | MOTOROLA Edge 60 Pro (Pantone Shadow, 25
+  Posted! MsgID: 2509
+  ✨ Reaction: ❤️
+  Posted! MsgID: 2510
+
+💰 Posted 5 deals with affiliate tracking!
+[11:45:01] 🔥 EXPERT AFFILIATE v3
+  [Flipkart] found 12, enriching prices... done
+  [Amazon] found 15
+
+📊 20 total | 🏆 8 high-value (score≥45)
+  #1 Score:120 | Flipkart | ₹7,299 | -57% | LG 60.45 cm (24 inch) Full HD IPS Panel 
+  #2 Score: 65 | Amazon   | ₹28,999 | -0% | inches Ultra Smart Google VW55GQ2
+  #3 Score: 60 | Amazon   | ₹6,499 | -0% | ZEBRONICS Monitor 1920x1080 Speakers Mou
+  #4 Score: 60 | Amazon   | ₹6,637 | -0% | FRONTECH Monitor Refresh Speaker MON 008
+  #5 Score: 45 | Amazon   | ₹30,999 | -0% | Xiaomi inch Ultra Smart L55MB FIN
+  #6 Score: 45 | Amazon   | ₹749 | -0% | 20000mAh Charging 12 Layer Protection Wa
+  #7 Score: 45 | Amazon   | ₹799 | -0% | AMYTEL 20000mAh Charging Portable Smartb
+  #8 Score: 45 | Amazon   | ₹818 | -0% | JUST CORSECA Lightweight Multi Layer Com
+  Posted! MsgID: 2519
+  Posted! MsgID: 2520
+  ✨ Reaction: 🤩
+
+💰 Posted 8 deals with affiliate tracking!
+[12:00:02] 🔥 EXPERT AFFILIATE v3
+  [Flipkart] found 8, enriching prices... done
+  [Amazon] found 10
+
+📊 18 total | 🏆 8 high-value (score≥45)
+  #1 Score:125 | Flipkart | ₹14,999 | -28% | POCO C85 5G Charger in the Box (Spring G
+  #2 Score:125 | Flipkart | ₹475 | -58% | YAROH E3_SH-12 Wireless Bluetooth Over t
+  #3 Score:110 | Flipkart | ₹12,804 | -19% | REDMI A7 Pro 5G (Black, 64 GB)
+  #4 Score:105 | Flipkart | ₹295 | -80% | Kabeer enterprises z2 bullet green ke an
+  #5 Score: 85 | Amazon   | ₹578 | -0% | Merishopp Replacement EXTREMEHeadset Pho
+  #6 Score: 85 | Amazon   | ₹749 | -0% | IKALL Phone Charging Bluetooth Vibration
+  #7 Score: 60 | Amazon   | ₹17,990 | -0% | Certified ThinkPad Business Processor Bl
+  #8 Score: 55 | Amazon   | ₹899 | -0% | Micromax All New J3 Plus Wireless
+  Posted! MsgID: 2525
+  ✨ Reaction: 💯
+  Posted! MsgID: 2527
+  ✨ Reaction: ❤️
+
+💰 Posted 8 deals with affiliate tracking!
+[12:15:01] 🔥 EXPERT AFFILIATE v3
+  [Flipkart] found 12, enriching prices... done
+  [Amazon] found 8
+
+📊 14 total | 🏆 3 high-value (score≥45)
+  #1 Score: 80 | Flipkart | ₹25,990 | -39% | Hisense 2026 Model 1.5 Ton 3 Star Split 
+  #2 Score: 80 | Flipkart | ₹49,500 | -38% | LG 2026 Model 1.5 Ton 5 Star Split Inver
+  #3 Score: 45 | Flipkart | ₹9,999 | -16% | Ai+ Pulse 2 (Pink, 128 GB)
+  Posted! MsgID: 2536
+  ✨ Reaction: 💯
+
+💰 Posted 3 deals with affiliate tracking!
+[12:30:01] 🔥 EXPERT AFFILIATE v3
+  [Flipkart] found 12, enriching prices... done
+  [Amazon] found 5
+
+📊 13 total | 🏆 7 high-value (score≥45)
+  #1 Score:145 | Flipkart | ₹2,998 | -66% | Monkeyman ApeWatch Rampage Smartwatch
+  #2 Score:125 | Flipkart | ₹849 | -83% | GameSir Edge-Lite | 1.99 \
+  #3 Score:120 | Flipkart | ₹21,999 | -26% | realme P4 5G (Engine Blue, 128 GB)
+  #4 Score: 80 | Flipkart | ₹24,583 | -23% | OnePlus Nord CE6 Lite (Vivid Mint, 128 G
+  #5 Score: 75 | Flipkart | ₹20,999 | -0% | vivo T4x 5G (Pronto Purple, 256 GB)
+  #6 Score: 55 | Flipkart | ₹29,999 | -18% | MOTOROLA Edge 60 Pro (Pantone Shadow, 25
+  #7 Score: 45 | Amazon   | ₹530 | -0% | GFive Display Wireless Digital Expandabl
+  Posted! MsgID: 2543
+  ✨ Reaction: 👍
+  Posted! MsgID: 2544
+  ✨ Reaction: 💯
+
+💰 Posted 7 deals with affiliate tracking!
+[12:45:02] 🔥 EXPERT AFFILIATE v3
+  [Flipkart] found 11, enriching prices... done
+  [Amazon] found 15
+
+📊 26 total | 🏆 8 high-value (score≥45)
+  #1 Score:125 | Flipkart | ₹28,999 | -55% | realme TechLife 139 cm (55 inch) QLED Ul
+  #2 Score:125 | Flipkart | ₹29,999 | -54% | realme TechLife 139 cm (55 inch) QLED Ul
+  #3 Score:125 | Flipkart | ₹6,599 | -61% | MarQ by Flipkart 60.96 cm (24 inch) Full
+  #4 Score:120 | Flipkart | ₹7,299 | -57% | LG 60.45 cm (24 inch) Full HD IPS Panel 
+  #5 Score: 75 | Flipkart | ₹43,490 | -23% | realme TechLife 139 cm (55 inch) QLED Ul
+  #6 Score: 65 | Flipkart | ₹9,599 | -22% | Acer 60.45 cm (24 inch) Full HD LED Back
+  #7 Score: 65 | Amazon   | ₹25,299 | -0% | Foxsky Frameless Ultra Smart FS55GATV
+  #8 Score: 65 | Amazon   | ₹26,999 | -0% | VW inches Ultra Google VW55GQ1
+  Posted! MsgID: 2546
+  ✨ Reaction: 🎉
+  Posted! MsgID: 2547
+  ✨ Reaction: 🔥
+
+💰 Posted 8 deals with affiliate tracking!
+[13:00:01] 🔥 EXPERT AFFILIATE v3
+  [Flipkart] found 8, enriching prices... done
+  [Amazon] found 10
+
+📊 18 total | 🏆 8 high-value (score≥45)
+  #1 Score:125 | Flipkart | ₹14,999 | -25% | OPPO K14x 5G (Prism Violet, 64 GB)
+  #2 Score:125 | Flipkart | ₹14,999 | -28% | POCO C85 5G Charger in the Box (Spring G
+  #3 Score:125 | Flipkart | ₹475 | -58% | YAROH E3_SH-12 Wireless Bluetooth Over t
+  #4 Score:105 | Flipkart | ₹295 | -80% | Kabeer enterprises z2 bullet green ke an
+  #5 Score: 85 | Amazon   | ₹578 | -0% | Merishopp Replacement EXTREMEHeadset Pho
+  #6 Score: 85 | Amazon   | ₹749 | -0% | IKALL Phone Charging Bluetooth Vibration
+  #7 Score: 80 | Flipkart | ₹12,999 | -0% | POCO M7 5G - Locked with Airtel Prepaid 
+  #8 Score: 70 | Flipkart | ₹14,499 | -19% | REDMI 15A (Ace Black, 128 GB)
+  Posted! MsgID: 2548
+  ✨ Reaction: 💯
+  Posted! MsgID: 2549
+  ✨ Reaction: ❤️
+
+💰 Posted 8 deals with affiliate tracking!
+[13:15:01] 🔥 EXPERT AFFILIATE v3
+  [Flipkart] found 12, enriching prices... done
+  [Amazon] found 8
+
+📊 18 total | 🏆 6 high-value (score≥45)
+  #1 Score: 80 | Flipkart | ₹36,490 | -39% | Blue Star 2026 Model 1.5 Ton 3 Star Spli
+  #2 Score: 80 | Flipkart | ₹37,490 | -38% | Blue Star 2026 Model 1.5 Ton 3 Star Spli
+  #3 Score: 55 | Amazon   | ₹899 | -0% | Micromax All New J3 Plus Wireless
+  #4 Score: 55 | Amazon   | ₹899 | -0% | Micromax All New J3 Plus Wireless
+  #5 Score: 45 | Flipkart | ₹9,999 | -16% | Ai+ Pulse 2 (Pink, 128 GB)
+  #6 Score: 45 | Amazon   | ₹530 | -0% | GFive Display Wireless Digital Expandabl
+  Posted! MsgID: 2550
+  ✨ Reaction: 🤩
+  Posted! MsgID: 2551
+  ✨ Reaction: 🎉
+
+💰 Posted 6 deals with affiliate tracking!
+[13:30:01] 🔥 EXPERT AFFILIATE v3
+  [Flipkart] found 12, enriching prices... done
+  [Amazon] found 5
+
+📊 8 total | 🏆 2 high-value (score≥45)
+  #1 Score:115 | Flipkart | ₹849 | -71% | PunnkFunnk Edge-Lite | 1.99 \
+  #2 Score:110 | Flipkart | ₹492 | -50% | RLS PulseWave Smart Band Watch T500 T800
+  Posted! MsgID: 2552
+  ✨ Reaction: 🔥
+
+💰 Posted 2 deals with affiliate tracking!
+[13:45:02] 🔥 EXPERT AFFILIATE v3
+  [Flipkart] found 11, enriching prices... done
+  [Amazon] found 15
+
+📊 18 total | 🏆 8 high-value (score≥45)
+  #1 Score: 65 | Amazon   | ₹28,999 | -0% | inches Ultra Smart Google VW55GQ2
+  #2 Score: 60 | Amazon   | ₹6,499 | -0% | ZEBRONICS Monitor 1920x1080 Speakers Mou
+  #3 Score: 60 | Amazon   | ₹6,637 | -0% | FRONTECH Monitor Refresh Speaker MON 008
+  #4 Score: 45 | Amazon   | ₹30,999 | -0% | Xiaomi inch Ultra Smart L55MB FIN
+  #5 Score: 45 | Amazon   | ₹749 | -0% | 20000mAh Charging 12 Layer Protection Wa
+  #6 Score: 45 | Amazon   | ₹799 | -0% | AMYTEL 20000mAh Charging Portable Smartb
+  #7 Score: 45 | Amazon   | ₹818 | -0% | JUST CORSECA Lightweight Multi Layer Com
+  #8 Score: 45 | Amazon   | ₹849 | -0% | Kratos 20000mAh Charging Powerbank Certi
+  Posted! MsgID: 2553
+  ✨ Reaction: ❤️
+  Posted! MsgID: 2554
+  ✨ Reaction: 💯
+
+💰 Posted 8 deals with affiliate tracking!
+[14:00:02] 🔥 EXPERT AFFILIATE v3
+  [Flipkart] found 8, enriching prices... done
+  [Amazon] found 10
+
+📊 8 total | 🏆 2 high-value (score≥45)
+  #1 Score:135 | Flipkart | ₹492 | -67% | MECKWELL HIGH BASS SOUND, CARD SUPPORTAB
+  #2 Score: 60 | Amazon   | ₹17,990 | -0% | Certified ThinkPad Business Processor Bl
+  Posted! MsgID: 2555
+  ✨ Reaction: 🔥
+
+💰 Posted 2 deals with affiliate tracking!
+[14:15:01] 🔥 EXPERT AFFILIATE v3
+  [Flipkart] found 12, enriching prices... done
+  [Amazon] found 8
+
+📊 12 total | 🏆 1 high-value (score≥45)
+  #1 Score: 65 | Flipkart | ₹45,600 | -34% | Voltas 2025 Model 1.5 Ton 5 Star Split I
+  Posted! MsgID: 2556
+  ✨ Reaction: 🎉
+
+💰 Posted 1 deals with affiliate tracking!
+[14:30:01] 🔥 EXPERT AFFILIATE v3
+  [Flipkart] found 12, enriching prices... done
+  [Amazon] found 5
+
+📊 8 total | 🏆 3 high-value (score≥45)
+  #1 Score:130 | Flipkart | ₹1,399 | -76% | Noise Icon 2 Gen 2 - 1.81 Display, BT Ca
+  #2 Score:115 | Flipkart | ₹24,999 | -19% | vivo T5x 5G (Cyber Green, 128 GB)
+  #3 Score: 45 | Flipkart | ₹21,499 | -8% | realme P4x 5G (Elegant Pink, 128 GB)
+  Posted! MsgID: 2557
+  ✨ Reaction: 💯
+
+💰 Posted 3 deals with affiliate tracking!

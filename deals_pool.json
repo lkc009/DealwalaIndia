@@ -1,4 +1,37 @@
 {
+<<<<<<< HEAD
   "deals": [],
   "generated_at": "2026-05-19T20:21:50.349663"
+=======
+  "deals": [
+    {
+      "title": "Samsung 301 L Frost Free Double Door 2 Star Refrigerator",
+      "price": 36990,
+      "mrp": 44999,
+      "discount": 17,
+      "link": "https://www.flipkart.com/samsung-301-l-frost-free-double-door-2-star-refrigerator/p/itm369353b9a2ce6?pid=RFRHJYT9R7TU4GVF&affid=lalitkcho",
+      "source": "Flipkart",
+      "pid": "itm369353b9a2ce6"
+    },
+    {
+      "title": "Samsung Galaxy F70e 5G (Limelight Green, 128 GB)",
+      "price": 16499,
+      "mrp": 18999,
+      "discount": 13,
+      "link": "https://www.flipkart.com/samsung-galaxy-f70e-5g-limelight-green-128-gb/p/itm9b75b980e9dae?pid=MOBHK55ADSJPFVBS&affid=lalitkcho",
+      "source": "Flipkart",
+      "pid": "itm9b75b980e9dae"
+    },
+    {
+      "title": "AuToMaTiC FoLdInG WaShInG CLeAnInG UnDeRwEaR",
+      "price": 979,
+      "mrp": null,
+      "discount": 0,
+      "link": "https://www.amazon.in/AuToMaTiC-FoLdInG-WaShInG-CLeAnInG-UnDeRwEaR/dp/B0GQH3V2QX/ref=sr_1_4?tag=123450005-21",
+      "source": "Amazon",
+      "asin": "B0GQH3V2QX"
+    }
+  ],
+  "generated_at": "2026-05-19T20:30:04.063951"
+>>>>>>> adbd580 (realtime refill [skip ci])
 }

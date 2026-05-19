@@ -1,4 +1,23 @@
 {
-  "deals": [],
-  "generated_at": "2026-05-19T19:53:55.532869"
+  "deals": [
+    {
+      "title": "YOROTO Portable Speaker With Thunder Sound and High Bass 5 W",
+      "price": 277,
+      "mrp": 1999,
+      "discount": 86,
+      "link": "https://www.flipkart.com/yoroto-portable-speaker-thunder-sound-high-bass-5-w-bluetooth/p/itmc5694979999c9?pid=ACCHGBGGNZHVY3PQ&affid=lalitkcho",
+      "source": "Flipkart",
+      "pid": "itmc5694979999c9"
+    },
+    {
+      "title": "ZEBRONICS ZEB-IGLOO 1 8 W Mobile/Tablet Speaker",
+      "price": 499,
+      "mrp": 799,
+      "discount": 37,
+      "link": "https://www.flipkart.com/zebronics-zeb-igloo-1-8-w-mobile-tablet-speaker/p/itm964a2653bb01b?pid=ACCH6MFC6J4PWBTZ&affid=lalitkcho",
+      "source": "Flipkart",
+      "pid": "itm964a2653bb01b"
+    }
+  ],
+  "generated_at": "2026-05-19T19:57:20.143844"
 }

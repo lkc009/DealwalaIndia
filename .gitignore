@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+screenshots/
+twitter_callback.py
+reddit_*.py
+Dockerfile
+railway.json
+app.json
+deamon.sh
+keep_alive.sh

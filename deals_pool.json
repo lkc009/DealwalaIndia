@@ -1,4 +1,32 @@
 {
-  "deals": [],
-  "generated_at": "2026-05-19T19:57:59.497478"
+  "deals": [
+    {
+      "title": "Lloyd 2026 Model 1.5 Ton 3 Star Split Inverter with Wi-fi AC",
+      "price": 34490,
+      "mrp": 57990,
+      "discount": 40,
+      "link": "https://www.flipkart.com/lloyd-2026-model-1-5-ton-3-star-split-inverter-wi-fi-ac/p/itmb70618a9ac25f?pid=ACNHKZ23PGBMDMXP&affid=lalitkcho",
+      "source": "Flipkart",
+      "pid": "itmb70618a9ac25f"
+    },
+    {
+      "title": "Hisense 2026 Model 1.5 Ton 3 Star Split Inverter AC",
+      "price": 25990,
+      "mrp": 43000,
+      "discount": 39,
+      "link": "https://www.flipkart.com/hisense-2026-model-1-5-ton-3-star-split-inverter-ac/p/itm55e8430c8b1aa?pid=ACNHHEJQZBFWH2G3&affid=lalitkcho",
+      "source": "Flipkart",
+      "pid": "itm55e8430c8b1aa"
+    },
+    {
+      "title": "POCO C71 - Locked with Airtel Prepaid (Power Black, 64 GB)",
+      "price": 8999,
+      "mrp": 8999,
+      "discount": 0,
+      "link": "https://www.flipkart.com/poco-c71-locked-airtel-prepaid-power-black-64-gb/p/itm24887c72b7130?pid=MOBHAFVJMF328YYJ&affid=lalitkcho",
+      "source": "Flipkart",
+      "pid": "itm24887c72b7130"
+    }
+  ],
+  "generated_at": "2026-05-19T20:17:20.564221"
 }

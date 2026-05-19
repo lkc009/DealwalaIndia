@@ -11,6 +11,8 @@ permissions:
 jobs:
   post-deals:
     runs-on: ubuntu-latest
+    env:
+      CLOUD_MODE: true
     steps:
       - uses: actions/checkout@v4
 
@@ -37,13 +39,10 @@ jobs:
       - name: Run poster
         run: python post_deals.py
 
-      - name: Save history
+      - name: Commit pool updates
         run: |
-          if [ -f ~/.codex/dealwalaindia_history.json ]; then
-            cp ~/.codex/dealwalaindia_history.json .
-            git config user.name "dealwala-bot"
-            git config user.email "bot@dealwalaindia.in"
-            git add dealwalaindia_history.json
-            git diff --staged --quiet || git commit -m "update history [skip ci]"
-            git push
-          fi
+          git config user.name "dealwala-bot"
+          git config user.email "bot@dealwalaindia.in"
+          git add deals_pool.json dealwalaindia_history.json
+          git diff --staged --quiet || git commit -m "update pool & history [skip ci]"
+          git push

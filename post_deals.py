@@ -24,6 +24,8 @@ MAX_DEALS = 4
 AFFILIATE_ID = "lalitkcho"
 AMAZON_TAG = "123450005-21"
 TWITTER_CREDENTIALS = os.path.expanduser("~/.codex/twitter_dealwala.json")
+POOL_FILE = "deals_pool.json"
+CLOUD_MODE = os.environ.get("CLOUD_MODE", "").lower() == "true"
 
 REACTION_SETS = [
     [{"type": "emoji", "emoji": "🔥"}],
@@ -540,18 +542,26 @@ def format_tweet(d):
             tweet = tweet[:277] + "..."
     return tweet
 
-def main():
-    print(f"[{datetime.now().strftime('%H:%M:%S')}] 🔥 EXPERT AFFILIATE v3")
-    token = load_config()
-    history = load_history()
+def get_deals(history):
     posted = set(history.get("posted", []))
+    
+    if CLOUD_MODE:
+        print("  ☁️ Cloud mode: reading from deal pool")
+        if os.path.exists(POOL_FILE):
+            with open(POOL_FILE) as f:
+                pool = json.load(f)
+            deals = pool.get("deals", [])
+            print(f"  Pool has {len(deals)} deals available")
+            return [d for d in deals if d["link"].split("?")[0] not in posted]
+        print("  No pool file found")
+        return []
+    
+    # Local mode: scrape fresh deals
     queries = get_query_set()
-
     all_deals = []
     all_deals.extend(scrape_flipkart(queries))
     all_deals.extend(scrape_amazon(queries))
 
-    # Deduplicate
     seen = set()
     unique = []
     for d in all_deals:
@@ -565,24 +575,35 @@ def main():
         if d["title"]:
             unique.append(d)
 
-    # Score and sort
     unique.sort(key=score_deal, reverse=True)
-    
-    # Filter: only high-value deals that score above threshold
     top_deals = [d for d in unique if score_deal(d) >= MIN_SCORE_THRESHOLD]
-    top_deals = top_deals[:MAX_DEALS * 2]  # Cap at 2 batches
-
-    print(f"\n📊 {len(unique)} total | 🏆 {len(top_deals)} high-value (score≥{MIN_SCORE_THRESHOLD})")
-    if not top_deals:
-        print("No high-value deals found. Waiting for better deals...")
-        return
+    top_deals = top_deals[:MAX_DEALS * 2]
     
-    # Debug: show top scores with source
+    print(f"\n📊 {len(unique)} total | 🏆 {len(top_deals)} high-value (score≥{MIN_SCORE_THRESHOLD})")
     for i, d in enumerate(top_deals[:8]):
         s = score_deal(d)
         print(f"  #{i+1} Score:{s:3d} | {d['source']:8s} | ₹{d['price']:,} | -{d['discount']}% | {d['title'][:40]}")
+    
+    # Save ALL scraped deals to pool for future cloud runs
+    if top_deals:
+        with open(POOL_FILE, "w") as f:
+            json.dump({"deals": top_deals, "generated_at": datetime.now().isoformat()}, f, indent=2)
+        print(f"  Saved {len(top_deals)} deals to pool, returning {MAX_DEALS} for immediate posting")
+    
+    return top_deals[:MAX_DEALS]
+
+def save_pool(deals):
+    with open(POOL_FILE, "w") as f:
+        json.dump({"deals": deals, "generated_at": datetime.now().isoformat()}, f, indent=2)
+
+def main():
+    print(f"[{datetime.now().strftime('%H:%M:%S')}] 🔥 EXPERT AFFILIATE v3")
+    token = load_config()
+    history = load_history()
+    
+    top_deals = get_deals(history)
     if not top_deals:
-        print("No new deals")
+        print("No deals to post. Waiting for better deals..." if not CLOUD_MODE else "Pool empty. Run scraper on device to refill.")
         return
 
     now = datetime.now().strftime("%b %d, %I:%M %p")
@@ -652,42 +673,13 @@ def main():
         history["posted"] = list(set(history.get("posted", []) + new_posted))[-2000:]
         history["last"] = datetime.now().isoformat()
         save_history(history)
+        # Remove posted deals from pool
+        posted_bases = set(new_posted)
+        remaining = [d for d in top_deals if d["link"].split("?")[0] not in posted_bases]
+        if CLOUD_MODE:
+            save_pool(remaining)
+            print(f"  Removed posted deals, {len(remaining)} left in pool")
         print(f"\n💰 Posted {len(new_posted)} deals with affiliate tracking!")
-
-    # Also post same deals to Twitter/X
-    try:
-        twitter_client = get_twitter_client()
-        me = twitter_client.get_me()
-        print(f"  🐦 Posting to @{me.data.username}...")
-    except Exception as e:
-        print(f"  ❌ Twitter auth failed: {e}")
-        print(f"  ⏩ Skipping Twitter posts")
-        twitter_client = None
-
-    if twitter_client and new_posted:
-        posted_tweets = set(history.get("tweets", []))
-        telegram_posted = set(new_posted)
-        tweeted = []
-        for d in top_deals:
-            base = d["link"].split("?")[0]
-            if base not in telegram_posted or base in posted_tweets:
-                continue
-            tweet = format_tweet(d)
-            try:
-                resp = twitter_client.create_tweet(text=tweet)
-                tweeted.append(base)
-                print(f"  🐦 ✅ {d['title'][:30]}...")
-                time.sleep(3)
-            except Exception as e:
-                print(f"  🐦 ❌ {d['title'][:20]}: {e}")
-                if "429" in str(e) or "rate" in str(e).lower():
-                    break
-
-        if tweeted:
-            history["tweets"] = list(set(history.get("tweets", []) + tweeted))[-2000:]
-            history["last"] = datetime.now().isoformat()
-            save_history(history)
-            print(f"\n  🐦 Posted {len(tweeted)} tweets to X!")
 
 if __name__ == "__main__":
     main()

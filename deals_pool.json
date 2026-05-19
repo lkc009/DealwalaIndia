@@ -1,8 +1,4 @@
 {
-<<<<<<< HEAD
-  "deals": [],
-  "generated_at": "2026-05-19T20:21:50.349663"
-=======
   "deals": [
     {
       "title": "Samsung 301 L Frost Free Double Door 2 Star Refrigerator",
@@ -33,5 +29,4 @@
     }
   ],
   "generated_at": "2026-05-19T20:30:04.063951"
->>>>>>> adbd580 (realtime refill [skip ci])
 }

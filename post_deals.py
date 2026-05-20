@@ -341,7 +341,7 @@ def scrape_amazon(queries):
     
     for q, price_limit in queries:
         url = f"https://www.amazon.in/s?k={urllib.parse.quote(q)}&s=price-asc-rank"
-        c = curl(url, timeout=10, use_amazon_headers=True)
+        c = curl(url, timeout=8, use_amazon_headers=True)
         if c:
             products = extract_amazon_deals(c)
             deals.extend(products[:5])
@@ -351,7 +351,7 @@ def scrape_amazon(queries):
 
 def fetch_product_price(product_link):
     """Visit individual product page to extract price. Converts 3x better."""
-    c = curl(product_link, timeout=8)
+    c = curl(product_link, timeout=5)
     if not c:
         return 0, None, 0
     
@@ -395,12 +395,16 @@ def scrape_flipkart(queries):
     
     # Enrich top deals with prices (visit product pages)
     print(f"found {len(deals)}, enriching prices...", end="", flush=True)
+    enrich_start = time.time()
     for d in deals[:6]:  # Only enrich top 6 (to save time)
+        if time.time() - enrich_start > 25:
+            print(f" (timeout, enriched {deals.index(d)})", end="", flush=True)
+            break
         price, mrp, discount = fetch_product_price(d["link"])
         d["price"] = price
         d["mrp"] = mrp
         d["discount"] = discount
-        time.sleep(0.3)
+        time.sleep(0.2)
     
     print(f" done")
     return deals
@@ -663,10 +667,17 @@ def main():
         print("Refill mode: pool saved, exiting without posting")
         return
 
+    # Enforce max runtime (cron-safe)
+    main_start = time.time()
+    max_runtime = 90
+
     now = datetime.now().strftime("%b %d, %I:%M %p")
     new_posted = []
 
     for i in range(0, len(top_deals), MAX_DEALS):
+        if time.time() - main_start > max_runtime:
+            print(f"  ⏰ Hit max runtime ({max_runtime}s), stopping")
+            break
         batch = top_deals[i:i+MAX_DEALS]
         
         # Cinematic header

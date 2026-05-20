@@ -1,4 +1,68 @@
 {
-  "deals": [],
-  "generated_at": "2026-05-20T05:59:00.247453"
+  "deals": [
+    {
+      "title": "ZEPAD Wireless style headphone Transition HD Sports HD Bluet",
+      "price": 497,
+      "mrp": 2999,
+      "discount": 83,
+      "link": "https://www.flipkart.com/zepad-wireless-style-headphone-transition-hd-sports-bluetooth/p/itm4dacf44fa53cf?pid=ACCFAVBHH4DP8FBX&affid=lalitkcho",
+      "source": "Flipkart",
+      "pid": "itm4dacf44fa53cf"
+    },
+    {
+      "title": "MOTOROLA g35 5G (Guava Red, 128 GB)",
+      "price": 12499,
+      "mrp": 12499,
+      "discount": 0,
+      "link": "https://www.flipkart.com/motorola-g35-5g-guava-red-128-gb/p/itm39bba58f6cdfc?pid=MOBH3YGPWZZB9ZZK&affid=lalitkcho",
+      "source": "Flipkart",
+      "pid": "itm39bba58f6cdfc"
+    },
+    {
+      "title": "Certified ThinkPad L440 Core 4200m",
+      "price": 13990,
+      "mrp": null,
+      "discount": 0,
+      "link": "https://www.amazon.in/Certified-ThinkPad-L440-Core-4200m/dp/B0H18ZJD5F/ref=sr_1_8?tag=123450005-21",
+      "source": "Amazon",
+      "asin": "B0H18ZJD5F"
+    },
+    {
+      "title": "Certified ThinkPad Business Processor Bluetooth",
+      "price": 17990,
+      "mrp": null,
+      "discount": 0,
+      "link": "https://www.amazon.in/Certified-ThinkPad-Business-Processor-Bluetooth/dp/B0GZX2LB66/ref=sr_1_9?tag=123450005-21",
+      "source": "Amazon",
+      "asin": "B0GZX2LB66"
+    },
+    {
+      "title": "Samsung Galaxy F70e 5G (Limelight Green, 128 GB)",
+      "price": 14499,
+      "mrp": 16999,
+      "discount": 14,
+      "link": "https://www.flipkart.com/samsung-galaxy-f70e-5g-limelight-green-128-gb/p/itm9b75b980e9dae?pid=MOBHK55AS9FDDYFE&affid=lalitkcho",
+      "source": "Flipkart",
+      "pid": "itm9b75b980e9dae"
+    },
+    {
+      "title": "POCO M7 Plus 5G (Aqua Blue, 128 GB)",
+      "price": 14499,
+      "mrp": 15999,
+      "discount": 9,
+      "link": "https://www.flipkart.com/poco-m7-plus-5g-aqua-blue-128-gb/p/itm7f065aa27b056?pid=MOBHETX6HEEATBVE&affid=lalitkcho",
+      "source": "Flipkart",
+      "pid": "itm7f065aa27b056"
+    },
+    {
+      "title": "POCO M7 Plus 5G (Carbon Black, 128 GB)",
+      "price": 14499,
+      "mrp": 15999,
+      "discount": 9,
+      "link": "https://www.flipkart.com/poco-m7-plus-5g-carbon-black-128-gb/p/itm9b1bceebdc605?pid=MOBHETX6RHPPFCFD&affid=lalitkcho",
+      "source": "Flipkart",
+      "pid": "itm9b1bceebdc605"
+    }
+  ],
+  "generated_at": "2026-05-20T06:06:24.765411"
 }

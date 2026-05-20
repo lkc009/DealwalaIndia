@@ -635,8 +635,23 @@ def save_pool(deals):
     with open(POOL_FILE, "w") as f:
         json.dump({"deals": deals, "generated_at": datetime.now().isoformat()}, f, indent=2)
 
+def ensure_cron_alive():
+    import subprocess as sp
+    try:
+        r = sp.run(["pgrep", "-x", "cron"], capture_output=True, text=True, timeout=5)
+        if r.returncode != 0 or not r.stdout.strip():
+            print("  ⚠️ Cron not running, restarting...")
+            sp.run(["/usr/sbin/cron"], timeout=5)
+            print("  ✅ Cron restarted")
+            return True
+    except Exception as e:
+        print(f"  ⚠️ Cron check failed: {e}")
+    return False
+
 def main():
     print(f"[{datetime.now().strftime('%H:%M:%S')}] 🔥 EXPERT AFFILIATE v3")
+    if not CLOUD_MODE:
+        ensure_cron_alive()
     token = load_config()
     history = load_history()
     

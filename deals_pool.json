@@ -1,4 +1,59 @@
 {
-  "deals": [],
-  "generated_at": "2026-05-19T20:34:29.480812"
+  "deals": [
+    {
+      "title": "POCO X7 5G (Yellow, 128 GB)",
+      "price": 17999,
+      "mrp": 24999,
+      "discount": 28,
+      "link": "https://www.flipkart.com/poco-x7-5g-yellow-128-gb/p/itm638304f590e26?pid=MOBH7YZ92V9ZTCPB&affid=lalitkcho",
+      "source": "Flipkart",
+      "pid": "itm638304f590e26"
+    },
+    {
+      "title": "Haier 240 L Frost Free Double Door 2 Star Refrigerator",
+      "price": 23590,
+      "mrp": 36690,
+      "discount": 35,
+      "link": "https://www.flipkart.com/haier-240-l-frost-free-double-door-2-star-refrigerator/p/itm006fb48f96b87?pid=RFRHKMPPU9UZCKY8&affid=lalitkcho",
+      "source": "Flipkart",
+      "pid": "itm006fb48f96b87"
+    },
+    {
+      "title": "AuToMaTiC FoLdInG WaShInG CLeAnInG UnDeRwEaR",
+      "price": 979,
+      "mrp": null,
+      "discount": 0,
+      "link": "https://www.amazon.in/AuToMaTiC-FoLdInG-WaShInG-CLeAnInG-UnDeRwEaR/dp/B0GQH3V2QX/ref=sr_1_5?tag=123450005-21",
+      "source": "Amazon",
+      "asin": "B0GQH3V2QX"
+    },
+    {
+      "title": "Portable Automatic Underwear Foldable Lightweight",
+      "price": 999,
+      "mrp": null,
+      "discount": 0,
+      "link": "https://www.amazon.in/Portable-Automatic-Underwear-Foldable-Lightweight/dp/B0GYJRYL1Y/ref=sr_1_7?tag=123450005-21",
+      "source": "Amazon",
+      "asin": "B0GYJRYL1Y"
+    },
+    {
+      "title": "Portable Automatic Underwear Foldable Lightweight",
+      "price": 999,
+      "mrp": null,
+      "discount": 0,
+      "link": "https://www.amazon.in/Portable-Automatic-Underwear-Foldable-Lightweight/dp/B0GRGTWMC6/ref=sr_1_8?tag=123450005-21",
+      "source": "Amazon",
+      "asin": "B0GRGTWMC6"
+    },
+    {
+      "title": "Portable Automatic Underwear Foldable Lightweight",
+      "price": 999,
+      "mrp": null,
+      "discount": 0,
+      "link": "https://www.amazon.in/Portable-Automatic-Underwear-Foldable-Lightweight/dp/B0GRGRWTGT/ref=sr_1_9?tag=123450005-21",
+      "source": "Amazon",
+      "asin": "B0GRGRWTGT"
+    }
+  ],
+  "generated_at": "2026-05-20T03:23:34.639377"
 }

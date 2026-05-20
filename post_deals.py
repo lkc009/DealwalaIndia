@@ -543,6 +543,34 @@ def format_tweet(d):
             tweet = tweet[:277] + "..."
     return tweet
 
+def try_cloud_scrape():
+    try:
+        from playwright.sync_api import sync_playwright
+        queries = get_query_set()
+        all_deals = []
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=True)
+            for q, price_limit in queries:
+                q = q.replace(" ", "+")
+                page = browser.new_page()
+                try:
+                    page.goto(f"https://www.amazon.in/s?k={q}&s=price-asc-rank", timeout=20000, wait_until="domcontentloaded")
+                    page.wait_for_timeout(3000)
+                    content = page.content()
+                    if "a-price-whole" in content and "captcha" not in content.lower():
+                        products = extract_amazon_deals(content)
+                        all_deals.extend(products[:5])
+                except:
+                    pass
+                page.close()
+            browser.close()
+        if all_deals:
+            print(f"  ☁️ Cloud scrape found {len(all_deals)} deals!")
+            return all_deals
+    except Exception as e:
+        print(f"  ☁️ Cloud scrape unavailable: {e}")
+    return []
+
 def get_deals(history):
     posted = set(history.get("posted", []))
     
@@ -552,9 +580,19 @@ def get_deals(history):
             with open(POOL_FILE) as f:
                 pool = json.load(f)
             deals = pool.get("deals", [])
-            print(f"  Pool has {len(deals)} deals available")
-            return [d for d in deals if d["link"].split("?")[0] not in posted]
-        print("  No pool file found")
+            deals = [d for d in deals if d["link"].split("?")[0] not in posted]
+            if deals:
+                print(f"  Pool has {len(deals)} deals available")
+                return deals
+            print("  Pool empty, trying cloud scrape...")
+        else:
+            print("  No pool file, trying cloud scrape...")
+        
+        cloud_deals = try_cloud_scrape()
+        if cloud_deals:
+            with open(POOL_FILE, "w") as f:
+                json.dump({"deals": cloud_deals, "generated_at": datetime.now().isoformat()}, f, indent=2)
+            return cloud_deals[:MAX_DEALS]
         return []
     
     # Local mode: scrape fresh deals

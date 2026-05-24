@@ -23,7 +23,10 @@ DEALS_HISTORY = os.path.expanduser("~/.codex/dealwalaindia_history.json")
 MAX_DEALS = 4
 AFFILIATE_ID = "lalitkcho"
 AMAZON_TAG = "123450005-21"
+FLIPKART_API_ID = "lalitkcho"
+FLIPKART_API_TOKEN = "4cfdf62b9efa4213bf3ed8caa6d7d2c4"
 TWITTER_CREDENTIALS = os.path.expanduser("~/.codex/twitter_dealwala.json")
+AMAZON_PAAPI_CONFIG = os.path.expanduser("~/.codex/amazon_paapi.json")
 POOL_FILE = "deals_pool.json"
 CLOUD_MODE = os.environ.get("CLOUD_MODE", "").lower() == "true"
 REFILL_MODE = "--refill" in sys.argv
@@ -234,6 +237,183 @@ def has_affiliate(link):
     if "amazon.in" in link or "amzn" in link:
         return "tag=" in link
     return False
+
+def load_amazon_paapi():
+    if os.path.exists(AMAZON_PAAPI_CONFIG):
+        try:
+            with open(AMAZON_PAAPI_CONFIG) as f:
+                return json.load(f)
+        except:
+            pass
+    return None
+
+def amazon_paapi_search(query, result_count=10):
+    """Search Amazon via Product Advertising API v5. Returns products with prices."""
+    cfg = load_amazon_paapi()
+    if not cfg:
+        return []
+    try:
+        from requests_aws4auth import AWS4Auth
+        import requests
+        region = cfg.get("region", "eu-west-1")
+        host = cfg.get("host", "webservices.amazon.in")
+        access_key = cfg.get("access_key")
+        secret_key = cfg.get("secret_key")
+        tag = cfg.get("associate_tag", AMAZON_TAG)
+        if not access_key or not secret_key:
+            return []
+
+        params = {
+            "Keywords": query,
+            "Resources": [
+                "Images.Primary.Large",
+                "ItemInfo.Title",
+                "ItemInfo.Features",
+                "Offers.Listings.Price",
+                "Offers.Listings.SavingBasis",
+                "Offers.Listings.DeliveryInfo.IsAmazonFulfilled",
+                "Offers.Summaries.HighestPrice",
+                "Offers.Summaries.LowestPrice",
+            ],
+            "PartnerTag": tag,
+            "PartnerType": "Associates",
+            "Marketplace": "www.amazon.in",
+            "ItemCount": result_count,
+            "SortBy": "Price:LowToHigh",
+        }
+
+        auth = AWS4Auth(access_key, secret_key, region, "ProductAdvertisingAPI")
+        url = f"https://{host}/paapi5/searchitems"
+        r = requests.post(url, auth=auth, json=params, timeout=15)
+
+        if r.status_code != 200:
+            print(f"  Amazon PAAPI error {r.status_code}")
+            return []
+
+        data = r.json()
+        items = data.get("SearchResult", {}).get("Items", [])
+        deals = []
+        for item in items:
+            asin = item.get("ASIN", "")
+            title = item.get("ItemInfo", {}).get("Title", {}).get("DisplayValue", "")
+            if not title:
+                continue
+            offers = item.get("Offers", {})
+            listings = offers.get("Listings", [])
+            price = 0
+            mrp_val = 0
+            savings = 0
+            if listings:
+                price_info = listings[0].get("Price", {})
+                price = int(float(price_info.get("Amount", 0)))
+                saving = listings[0].get("SavingBasis", {})
+                savings = int(float(saving.get("Amount", 0))) if saving else 0
+                if savings and price:
+                    mrp_val = price + savings
+            summaries = offers.get("Summaries", [])
+            if not mrp_val and summaries:
+                hp = summaries[0].get("HighestPrice", {})
+                mrp_val = int(float(hp.get("Amount", 0))) if hp else 0
+
+            discount = 0
+            if mrp_val and price and mrp_val > price:
+                discount = int(((mrp_val - price) / mrp_val) * 100)
+
+            image = item.get("Images", {}).get("Primary", {}).get("Large", {}).get("URL", "")
+            product_url = f"https://www.amazon.in/dp/{asin}"
+            aff_link = add_affiliate(product_url)
+            if aff_link and price >= 100:
+                deals.append({
+                    "title": title[:60],
+                    "price": price,
+                    "mrp": mrp_val if mrp_val > price else None,
+                    "discount": discount,
+                    "link": aff_link,
+                    "source": "Amazon",
+                    "asin": asin,
+                    "image": image,
+                })
+        return deals
+    except Exception as e:
+        print(f"  Amazon PAAPI error: {e}")
+        return []
+
+def scrape_amazon_paapi(queries):
+    """Search Amazon via official PA-API — preferred over scraping."""
+    deals = []
+    print("  [Amazon API] ", end="", flush=True)
+    for q, price_limit in queries:
+        products = amazon_paapi_search(q, 6)
+        deals.extend(products)
+    print(f"found {len(deals)} deals", flush=True)
+    return deals
+
+def flipkart_api_search(query, result_count=10):
+    """Search Flipkart via official Affiliate API. Returns products with price, MRP, discount."""
+    try:
+        url = f"https://affiliate-api.flipkart.net/affiliate/1.0/search.json?query={urllib.parse.quote(query)}&resultCount={result_count}"
+        cmd = [
+            "curl", "-s", "--max-time", "12",
+            "-H", f"Fk-Affiliate-Id: {FLIPKART_API_ID}",
+            "-H", f"Fk-Affiliate-Token: {FLIPKART_API_TOKEN}",
+            url
+        ]
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=15)
+        if r.returncode != 0:
+            return []
+        data = json.loads(r.stdout)
+        products = data.get("products", [])
+        deals = []
+        for p in products:
+            info = p.get("productBaseInfoV1", {})
+            title = info.get("title", "")
+            if not title or len(title) < 5:
+                continue
+            mrp_obj = info.get("maximumRetailPrice", {})
+            mrp_val = mrp_obj.get("amount", 0) if isinstance(mrp_obj, dict) else mrp_obj
+            sp_obj = info.get("flipkartSpecialPrice", {})
+            price = sp_obj.get("amount", 0) if isinstance(sp_obj, dict) else 0
+            if not price:
+                fsp_obj = info.get("flipkartSellingPrice", {})
+                price = fsp_obj.get("amount", 0) if isinstance(fsp_obj, dict) else 0
+            product_url = info.get("productUrl", "")
+            image_urls = info.get("imageUrls", {})
+            image_url = ""
+            if isinstance(image_urls, dict):
+                image_url = image_urls.get("800x800", image_urls.get("400x400", image_urls.get("200x200", "")))
+            discount = info.get("discountPercentage", 0)
+            if not discount and mrp_val and price and mrp_val > price:
+                discount = int(((mrp_val - price) / mrp_val) * 100)
+            price = int(float(price))
+            mrp_val = int(float(mrp_val)) if mrp_val else 0
+            discount = int(float(discount))
+            if price >= 100:
+                aff_link = add_affiliate(product_url)
+                if aff_link:
+                    deals.append({
+                        "title": title[:60],
+                        "price": price,
+                        "mrp": mrp_val if mrp_val > price else None,
+                        "discount": discount if discount else 0,
+                        "link": aff_link,
+                        "source": "Flipkart",
+                        "pid": info.get("productId", ""),
+                        "image": image_url,
+                    })
+        return deals
+    except Exception as e:
+        print(f"  Flipkart API error: {e}")
+        return []
+
+def scrape_flipkart_api(queries):
+    """Search Flipkart via official API — preferred over scraping."""
+    deals = []
+    print("  [Flipkart API] ", end="", flush=True)
+    for q, price_limit in queries:
+        products = flipkart_api_search(q, 8)
+        deals.extend(products)
+    print(f"found {len(deals)} deals", flush=True)
+    return deals
 
 def extract_flipkart_products(content, price_limit=None):
     """Extract product links + names from Flipkart search pages."""
@@ -599,11 +779,23 @@ def get_deals(history):
             return cloud_deals[:MAX_DEALS]
         return []
     
-    # Local mode: scrape fresh deals
+    # Local mode: fetch fresh deals (API first, fallback to scrape)
     queries = get_query_set()
     all_deals = []
-    all_deals.extend(scrape_flipkart(queries))
-    all_deals.extend(scrape_amazon(queries))
+    fk_deals = scrape_flipkart_api(queries)
+    if fk_deals:
+        all_deals.extend(fk_deals)
+        print(f"  Flipkart API — {len(fk_deals)} deals")
+    else:
+        print("  Flipkart API failed, falling back to scrape...")
+        all_deals.extend(scrape_flipkart(queries))
+    amz_deals = scrape_amazon_paapi(queries)
+    if amz_deals:
+        all_deals.extend(amz_deals)
+        print(f"  Amazon PA-API — {len(amz_deals)} deals")
+    else:
+        print("  Amazon scraping fallback...")
+        all_deals.extend(scrape_amazon(queries))
 
     seen = set()
     unique = []
@@ -620,12 +812,21 @@ def get_deals(history):
 
     unique.sort(key=score_deal, reverse=True)
     top_deals = [d for d in unique if score_deal(d) >= MIN_SCORE_THRESHOLD]
-    top_deals = top_deals[:MAX_DEALS * 2]
     
     print(f"\n📊 {len(unique)} total | 🏆 {len(top_deals)} high-value (score≥{MIN_SCORE_THRESHOLD})")
     for i, d in enumerate(top_deals[:8]):
         s = score_deal(d)
         print(f"  #{i+1} Score:{s:3d} | {d['source']:8s} | ₹{d['price']:,} | -{d['discount']}% | {d['title'][:40]}")
+    
+    # Ensure at least 1 Amazon deal makes the cut
+    amazon_in_top = [d for d in top_deals if d["source"] == "Amazon"]
+    if amazon_in_top and len([d for d in top_deals[:MAX_DEALS] if d["source"] == "Amazon"]) == 0:
+        best_amz = amazon_in_top[0]
+        top_deals.remove(best_amz)
+        top_deals.insert(0, best_amz)
+        print(f"  → Forced Amazon deal into top picks: {best_amz['title'][:40]}")
+    
+    top_deals = top_deals[:MAX_DEALS * 2]
     
     # Save ALL scraped deals to pool for future cloud runs
     if top_deals:

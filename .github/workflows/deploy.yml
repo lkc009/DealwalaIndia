@@ -1,4 +1,4 @@
-name: DealWalaIndia 24/7
+name: DealWalaIndia 24/7 (ENHANCED: E-COMMERCE + TRAVEL)
 
 on:
   schedule:
@@ -38,7 +38,11 @@ jobs:
           echo '${{ secrets.TELEGRAM_BOT_CONFIG }}' > ~/.codex/telegram-bridge.json
           echo '${{ secrets.TWITTER_API_CONFIG }}' > ~/.codex/twitter_dealwala.json
 
-      - name: Run poster
+      - name: Run ENHANCED poster (E-COMMERCE + TRAVEL)
+        run: python post_enhanced_deals.py
+
+      - name: Run legacy poster (backup)
+        if: failure()
         run: python post_deals.py
 
       - name: Commit pool updates
